@@ -17,3 +17,17 @@ exports.getUserProfile = async (req, res) => {
     res.status(500).send('Server Error');
   }
 };
+
+
+exports.listUsers = async (req, res) => {
+  try {
+    //get just name and id from the user
+    const users = await UserModel.findAll({
+      attributes: ['id', 'name'],
+    });
+    res.status(200).json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server Error');
+  }
+};
