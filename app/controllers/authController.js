@@ -40,10 +40,18 @@ exports.login = async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
+
+    console.log('user', user);
+    
+
+
     // Gere o token JWT
-    const payload = { user: { id: user.id } };
+    const payload = { user: { id: user.id, name: user.name, email: email } };
     const token = jwt.sign(payload, config.development.jwtSecret, { expiresIn: '1h' });
-    res.json({ token });
+    res.json({ 
+      message: 'Login successful',
+      token: token,
+     });
   } catch (error) {
     console.error(error);
     res.status(500).send('Server Error');

@@ -7,6 +7,10 @@ const User = sequelize.define('tb_users', {
     autoIncrement: true,
     primaryKey: true,
   },
+  name: {
+    type: Sequelize.STRING,
+    allowNull: true,
+  },
   email: {
     type: Sequelize.STRING,
     allowNull: false,
