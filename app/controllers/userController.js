@@ -8,7 +8,9 @@ exports.getUserProfile = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // Envie os detalhes do usuário na resposta
+    //remove the password from the user object before sending it to the client
+    delete user.dataValues.password;
+
     res.json(user);
   } catch (error) {
     console.error(error);

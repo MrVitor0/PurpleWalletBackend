@@ -57,3 +57,30 @@ exports.login = async (req, res) => {
     res.status(500).send('Server Error');
   }
 };
+
+exports.refresh = async (req, res) => {
+  try {
+    // Verify if the user exists
+    const user = await UserModel.findByPk(req.user.id);
+    if (!user && !req.token) {
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
+    // Verify if the old token is valid
+    jwt.verify(req.token, config.development.jwtSecret, (err, decoded) => {
+      if (err) {
+        if (err.name === 'TokenExpiredError') {
+          return res.status(401).json({ message: 'Token has expired, please log in again' });
+        } else {
+          return res.status(401).json({ message: 'Invalid token' });
+        }
+      }
+      // Generate a new token with the same user information
+      const payload = { user: { id: user.id, name: user.name, email: user.email } };
+      const newToken = jwt.sign(payload, config.development.jwtSecret, { expiresIn: '1h' });
+      res.json({ token: newToken });
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server Error');
+  }
+};
