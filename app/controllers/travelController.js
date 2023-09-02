@@ -10,10 +10,12 @@ exports.savePurchase = async (req, res) => {
     if (!name || !amount || !Array.isArray(debts)) {
       return res.status(400).json({ error: 'Name, amount, and debts are required' });
     }
-    // Verifica se a soma das dívidas é igual ao valor total
+    // Verifica se a soma das dívidas é igual ao valor total com uma tolerância de 1 centavo
     const debtsTotal = debts.reduce((total, debt) => total + debt.amount, 0);
-    if (parseFloat(debtsTotal.toFixed(2)) !== parseFloat(amount.toFixed(2))) {
-      return res.status(400).json({ error: 'The sum of debts.amount must be equal to the amount' });
+    const centThreshold = 0.05; // Limite de 1 centavo de diferença
+
+    if (Math.abs(debtsTotal - amount) > centThreshold) {
+        return res.status(400).json({ error: 'The sum of debts.amount must be equal to the amount' });
     }
     // Cria a compra
     purchase = await travelPurchaseModel.create({
