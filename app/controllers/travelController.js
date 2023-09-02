@@ -51,3 +51,33 @@ exports.savePurchase = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.retrievePurchases = async (req, res) => {
+    try {
+        const purchases = await travelDebtsModel.findAll({
+            where: { id_user: req.user.id },
+            attributes: ['id', 'amount'],
+            include: [{
+                model: travelPurchaseModel,
+                as: 'travelPurchase',
+                attributes: [
+                    ['amount', 'total_amount'],
+                    'name',
+                    'createdAt',
+                    ['id', 'purchase_id'],
+                    'isPaid'
+                ],
+            }],
+            order: [[{ model: travelPurchaseModel, as: 'travelPurchase' }, 'createdAt', 'DESC']]
+        });
+        //sum the total amount of each purchase
+        let total_debts = 0;
+        purchases.forEach((purchase) => {
+            total_debts += purchase.amount;
+        });
+        res.status(200).json({ total_debts, purchases });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
+};
