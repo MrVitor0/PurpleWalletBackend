@@ -5,7 +5,7 @@ const UserModel = require('../models/userModel');
 
 exports.register = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { name, email, password } = req.body;
     // Verifique se o usuário já existe
     const existingUser = await UserModel.findOne({ where: { email } });
     if (existingUser) {
@@ -16,11 +16,14 @@ exports.register = async (req, res) => {
     // Criptografe a senha usando o salt
     const hashedPassword = await bcrypt.hash(password, saltRounds);
     // Crie um novo usuário
-    const newUser = await UserModel.create({ email, password: hashedPassword });
+    const user = await UserModel.create({name, email, password: hashedPassword });
     // Gere o token JWT
-    const payload = { user: { id: newUser.id } };
+    const payload = { user: { id: user.id, name: user.name, email: email } };
     const token = jwt.sign(payload, config.development.jwtSecret, { expiresIn: '1h' });
-    res.json({ token });
+    res.json({ 
+      message: 'Login successful',
+      token: token,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).send('Server Error');
@@ -40,11 +43,6 @@ exports.login = async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
-
-    console.log('user', user);
-    
-
-
     // Gere o token JWT
     const payload = { user: { id: user.id, name: user.name, email: email } };
     const token = jwt.sign(payload, config.development.jwtSecret, { expiresIn: '1h' });
