@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../../config/database');
+const userModel = require('./userModel');
 
 const travelPurchaseModel = sequelize.define('tb_trl_purchases', {
   id: {
@@ -15,10 +16,18 @@ const travelPurchaseModel = sequelize.define('tb_trl_purchases', {
     type: Sequelize.DOUBLE,
     allowNull: false,
   },
-  isPaid: {
-    type: Sequelize.BOOLEAN,
+  payerId: {
+    type: Sequelize.BIGINT,
     defaultValue: false
   }
 });
+// Defina o relacionamento com travelPurchaseModel
+travelPurchaseModel.belongsTo(userModel, {
+  foreignKey: 'payerId',
+  targetKey: 'id',
+  as: 'payer'
+});
+
+
 
 module.exports = travelPurchaseModel;

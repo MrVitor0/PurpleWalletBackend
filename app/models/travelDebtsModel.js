@@ -31,11 +31,12 @@ travelDebtsModel.belongsTo(userModel, {
     as: 'user'
 });
 
-// Defina o relacionamento com travelPurchaseModel
+// // Defina o relacionamento com travelPurchaseModel
 travelDebtsModel.belongsTo(travelPurchaseModel, {
-    foreignKey: 'id_trv_purchase', 
-    targetKey: 'id', 
-    as: 'travelPurchase'
+  foreignKey: 'id_trv_purchase',
+  targetKey: 'id',
+  as: 'travelPurchase'
 });
+
 
 module.exports = travelDebtsModel;
