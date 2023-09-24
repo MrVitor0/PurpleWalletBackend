@@ -7,6 +7,7 @@ const sequelize = require('./config/database');
 const userRoutes = require('./app/routes/userRoutes');
 const authRoutes = require('./app/routes/authRoutes');
 const travelRoutes = require('./app/routes/travelRoutes');
+const bankingRoutes = require('./app/routes/bankingRoutes');
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(bodyParser.json());
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/travel', travelRoutes);
+app.use('/api/banking', bankingRoutes);
 
 sequelize.sync({ force: false })
   .then(() => {
