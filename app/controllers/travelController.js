@@ -1,12 +1,14 @@
-const travelPurchaseModel = require('../models/travelPurchaseModel');
-const travelDebtsModel = require('../models/travelDebtsModel');
-const userModel = require('../models/userModel');
+import travelPurchaseModel from '../models/travelPurchaseModel.js'
+import travelDebtsModel from '../models/travelDebtsModel.js'
+import userModel from '../models/userModel.js'
 
-const Sequelize = require('sequelize');
-const sequelize = require('../../config/database');
+import Sequelize from 'sequelize'
+import sequelize from '../../config/database.js'
 
 const Op = Sequelize.Op;
 
+
+const exports = {};
 exports.savePurchase = async (req, res) => {
   let purchase; // Variável para armazenar a compra criada
 
@@ -157,7 +159,7 @@ exports.retrieveUserDebts = async (req, res) => {
 
 exports.retrieveEarnings = async (req, res) => {
   try {
-    userId = req.user.id;
+    let userId = req.user.id;
     const query = `
           SELECT
               MIN(a.id) as trl_debts_id,
@@ -208,3 +210,5 @@ exports.deletePurchase = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 }
+
+export default exports;

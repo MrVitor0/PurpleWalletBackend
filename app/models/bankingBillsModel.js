@@ -1,12 +1,15 @@
-const Sequelize = require('sequelize');
-const sequelize = require('../../config/database');
-const bankingModel = require('./bankingModel');
+import sequelize from '../../config/database.js';
+import Sequelize from 'sequelize';
 
 const bankingBillsModel = sequelize.define('tb_banking_bills', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     primaryKey: true,
+  },
+  id_banking: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
   },
   type_transaction: {
     type: Sequelize.INTEGER,
@@ -34,4 +37,4 @@ const bankingBillsModel = sequelize.define('tb_banking_bills', {
   },
 });
 
-module.exports = bankingBillsModel;
+export default bankingBillsModel;

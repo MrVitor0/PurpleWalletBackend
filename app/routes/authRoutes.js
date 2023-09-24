@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express'
 const router = express.Router();
-const AuthController = require('../controllers/authController');
-const authMiddleware = require('../middleware/authMiddleware');
+import AuthController from '../controllers/authController.js'
+import authMiddleware from '../middlewares/authMiddleware.js'
 
 // Rota para cadastro de usuário
 router.post('/register', AuthController.register);
@@ -10,4 +10,4 @@ router.post('/register', AuthController.register);
 router.post('/login', AuthController.login);
 router.post('/refresh-token', authMiddleware, AuthController.refresh);
 
-module.exports = router;
+export default router;

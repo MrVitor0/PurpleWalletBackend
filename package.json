@@ -2,6 +2,8 @@
   "name": "purplewalletbackend",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
+  
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -28,5 +30,6 @@
     "multer": "^1.4.5-lts.1",
     "mysql2": "^3.6.0",
     "sequelize": "^6.32.1"
-  }
+  },
+  "devDependencies": {}
 }

@@ -1,8 +1,10 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const config = require('../../config/config');
-const UserModel = require('../models/userModel');
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import config from '../../config/config.js'
+import BankingModel from '../models/bankingModel.js'
+import UserModel from '../models/userModel.js'
 
+const exports = {};
 exports.register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -12,13 +14,18 @@ exports.register = async (req, res) => {
       return res.status(400).json({ message: 'User already exists' });
     }
     // Obtenha o número de rounds do .env
-    const saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS);
+    const saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS || '10');
     // Criptografe a senha usando o salt
     const hashedPassword = await bcrypt.hash(password, saltRounds);
     // Crie um novo usuário
     const user = await UserModel.create({name, email, password: hashedPassword });
+    //also create a banking account for the user
+    const banking = await BankingModel.create({
+      id_user: user.id,
+      balance: 0
+    });
     // Gere o token JWT
-    const payload = { user: { id: user.id, name: user.name, email: email } };
+    const payload = { user: { id: user.id, name: user.name, email: email} };
     const token = jwt.sign(payload, config.development.jwtSecret, { expiresIn: '1h' });
     res.json({ 
       message: 'Login successful',
@@ -82,3 +89,6 @@ exports.refresh = async (req, res) => {
     res.status(500).send('Server Error');
   }
 };
+
+
+export default exports;

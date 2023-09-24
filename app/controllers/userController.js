@@ -1,4 +1,7 @@
-const UserModel = require('../models/userModel');
+
+import UserModel from '../models/userModel.js';
+
+const exports = {};
 
 exports.getUserProfile = async (req, res) => {
   try {
@@ -31,3 +34,5 @@ exports.listUsers = async (req, res) => {
     res.status(500).send('Server Error');
   }
 };
+
+export default exports;

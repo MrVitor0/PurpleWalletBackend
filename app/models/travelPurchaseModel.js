@@ -1,6 +1,6 @@
-const Sequelize = require('sequelize');
-const sequelize = require('../../config/database');
-const userModel = require('./userModel');
+import sequelize from '../../config/database.js';
+import Sequelize from 'sequelize';
+import userModel from './userModel.js';
 
 const travelPurchaseModel = sequelize.define('tb_trl_purchases', {
   id: {
@@ -30,4 +30,4 @@ travelPurchaseModel.belongsTo(userModel, {
 
 
 
-module.exports = travelPurchaseModel;
+export default travelPurchaseModel;

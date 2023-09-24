@@ -1,6 +1,7 @@
-require('dotenv').config(); // Carregar variáveis de ambiente do .env
+import dotenv from 'dotenv';
+dotenv.config();
 
-module.exports = {
+let configuration = {
   development: {
     dialect: 'mysql',
     username: process.env.DB_USERNAME,
@@ -17,3 +18,4 @@ module.exports = {
     // ...
   },
 };
+export default configuration;

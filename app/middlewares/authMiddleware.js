@@ -1,7 +1,7 @@
-const jwt = require('jsonwebtoken');
-const config = require('../../config/config'); // Importe suas configurações de JWT
+import config from '../../config/config.js';
+import jwt from 'jsonwebtoken';
 
-module.exports = (req, res, next) => {
+const authMiddleware = async (req, res, next) => {
   const token = req.header('Authorization');
   if (!token) {
     return res.status(401).json({ message: 'Authorization denied' });
@@ -19,3 +19,7 @@ module.exports = (req, res, next) => {
     res.status(401).json({ message: 'Invalid token' });
   }
 };
+
+export default authMiddleware;
+
+

@@ -1,13 +1,11 @@
-require('dotenv').config(); // Carregar variáveis de ambiente do .env
-
-const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const sequelize = require('./config/database');
-const userRoutes = require('./app/routes/userRoutes');
-const authRoutes = require('./app/routes/authRoutes');
-const travelRoutes = require('./app/routes/travelRoutes');
-const bankingRoutes = require('./app/routes/bankingRoutes');
+import express from 'express';  
+import cors from  'cors'
+import bodyParser from  'body-parser'
+import sequelize from  './config/database.js'
+import userRoutes from  './app/routes/userRoutes.js'
+import authRoutes from  './app/routes/authRoutes.js'
+import travelRoutes from  './app/routes/travelRoutes.js'
+import bankingRoutes from  './app/routes/bankingRoutes.js'
 
 const app = express();
 

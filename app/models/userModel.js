@@ -1,5 +1,8 @@
-const Sequelize = require('sequelize');
-const sequelize = require('../../config/database');
+import Sequelize from 'sequelize';
+import sequelize from '../../config/database.js';
+import BankingBillsModel from './bankingBillsModel.js';
+import BankingModel from './bankingModel.js';
+
 
 const User = sequelize.define('tb_users', {
   id: {
@@ -22,4 +25,9 @@ const User = sequelize.define('tb_users', {
   },
 });
 
-module.exports = User;
+User.hasMany(BankingModel, {
+  foreignKey: 'id_user',
+  as: 'banking',
+});
+
+export default User;

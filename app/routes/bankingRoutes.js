@@ -1,9 +1,12 @@
-const authMiddleware = require('../middleware/authMiddleware');
+import authMiddleware from '../middlewares/authMiddleware.js'
 
-const express = require('express');
+import express from 'express'
 const router = express.Router();
-const BankingController = require('../controllers/bankingController');
+import BankingController from '../controllers/bankingController.js'
 
 router.get('/user/balance', authMiddleware, BankingController.getUserBalance);
 
-module.exports = router;
+//User transactions
+router.post('/user/transaction/create', authMiddleware, BankingController.createTransaction);
+
+export default router;

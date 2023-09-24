@@ -1,7 +1,7 @@
-const Sequelize = require('sequelize');
-const sequelize = require('../../config/database');
-const userModel = require('./userModel');
-const BankingBillsModel = require('./bankingBillsModel');
+import sequelize from '../../config/database.js';
+import Sequelize from 'sequelize';
+import BankingBillsModel from './bankingBillsModel.js';
+
 const bankingModel = sequelize.define('tb_banking', {
   id: {
     type: Sequelize.INTEGER,
@@ -26,18 +26,10 @@ const bankingModel = sequelize.define('tb_banking', {
   },
 });
 
-// Defina o relacionamento com userModel
-bankingModel.belongsTo(userModel, {
-    foreignKey: 'id_user',
-    targetKey: 'id',
-    as: 'user'
-});
-
 // No modelo BankingModel
 bankingModel.hasMany(BankingBillsModel, {
     foreignKey: 'id_banking',
     as: 'banking', 
 });
   
-
-module.exports = bankingModel;
+export default bankingModel;

@@ -1,8 +1,8 @@
-const authMiddleware = require('../middleware/authMiddleware');
+import authMiddleware from '../middlewares/authMiddleware.js'
 
-const express = require('express');
-const router = express.Router();
-const TravelController = require('../controllers/travelController');
+import express from 'express'
+const router = express.Router();;
+import TravelController from '../controllers/travelController.js'
 
 router.post('/purchase/create', authMiddleware, TravelController.savePurchase);
 router.get('/purchase/retrieve', authMiddleware, TravelController.retrievePurchases);
@@ -12,4 +12,4 @@ router.get('/purchase/retrieve/receives', authMiddleware, TravelController.retri
 
 router.delete('/purchase/delete/:id', authMiddleware, TravelController.deletePurchase);
 
-module.exports = router;
+export default router;
