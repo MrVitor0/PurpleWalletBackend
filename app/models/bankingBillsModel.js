@@ -1,5 +1,6 @@
 import sequelize from '../../config/database.js';
 import Sequelize from 'sequelize';
+const bankingModel = './bankingModel.js';
 
 const bankingBillsModel = sequelize.define('tb_banking_bills', {
   id: {
@@ -36,5 +37,6 @@ const bankingBillsModel = sequelize.define('tb_banking_bills', {
     defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
   },
 });
+
 
 export default bankingBillsModel;

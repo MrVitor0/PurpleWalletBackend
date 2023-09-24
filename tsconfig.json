@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "moduleResolution": "node",
+        "outDir": "./dist",
+     },
+    "include": [
+      "app/**/*.ts"
+, "app/controllers/bankingController.js", "app/utils/BankingBillsValidator.js"    ],
+}
+  

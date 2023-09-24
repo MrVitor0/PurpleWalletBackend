@@ -3,7 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  
+  "build": {
+    "files": [
+      "app/**/*.ts"
+    ],
+    "outDir": "dist"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -31,5 +36,7 @@
     "mysql2": "^3.6.0",
     "sequelize": "^6.32.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  }
 }
