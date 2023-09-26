@@ -96,7 +96,7 @@ exports.getTransaction = async (req, res) => {
       let current_incoming = 0;
       let current_expenses = 0;
       transaction.banking.forEach(banking => {
-          if (banking.type_transaction === 1 || banking.type_transaction === 3) {
+          if (banking.type_transaction === 1) {
             account_balance += banking.amount;
             current_incoming += banking.amount;
           } else {
@@ -105,6 +105,10 @@ exports.getTransaction = async (req, res) => {
           }
           banking.type_transaction = BankingBillsValidator.getTransactionType(banking.type_transaction?.toString());
           banking.type_payment = BankingBillsValidator.getPaymentType(banking.type_payment?.toString());
+      });
+      //order transaction by createdAt
+      transaction.banking.sort((a, b) => {
+        return new Date(b.createdAt) - new Date(a.createdAt);
       });
      //add the account_balance to the response
       res.status(201).send({
