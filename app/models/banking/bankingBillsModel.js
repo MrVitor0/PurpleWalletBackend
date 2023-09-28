@@ -1,4 +1,4 @@
-import sequelize from '../../config/database.js';
+import sequelize from '../../../config/database.js';
 import Sequelize from 'sequelize';
 const bankingModel = './bankingModel.js';
 

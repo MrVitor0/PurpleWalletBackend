@@ -1,5 +1,5 @@
-import bankingModel from '../models/bankingModel.js';
-import bankingBillsModel from '../models/bankingBillsModel.js';
+import bankingModel from '../models/banking/bankingModel.js';
+import bankingBillsModel from '../models/banking/bankingBillsModel.js';
 import BankingBillsValidator from '../utils/bankingBillsValidator.js';
 const exports = {}
 exports.getUserBalance = async (req, res) => {

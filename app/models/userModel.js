@@ -1,8 +1,7 @@
 import Sequelize from 'sequelize';
 import sequelize from '../../config/database.js';
-import BankingBillsModel from './bankingBillsModel.js';
-import BankingModel from './bankingModel.js';
-
+import BankingModel from './banking/bankingModel.js';
+import creditModel from './credit/creditModel.js';
 
 const User = sequelize.define('tb_users', {
   id: {
@@ -28,6 +27,10 @@ const User = sequelize.define('tb_users', {
 User.hasMany(BankingModel, {
   foreignKey: 'id_user',
   as: 'banking',
+});
+User.hasMany(creditModel, {
+  foreignKey: 'id_user',
+  as: 'credit',
 });
 
 export default User;

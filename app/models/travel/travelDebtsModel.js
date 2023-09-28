@@ -1,7 +1,7 @@
-import sequelize from '../../config/database.js';
+import sequelize from '../../../config/database.js';
 import Sequelize from 'sequelize';
 import travelPurchaseModel from './travelPurchaseModel.js';
-import userModel from './userModel.js';
+import userModel from '../userModel.js';
 
 const travelDebtsModel = sequelize.define('tb_trl_debts', {
   id: {

@@ -1,5 +1,5 @@
-import travelPurchaseModel from '../models/travelPurchaseModel.js'
-import travelDebtsModel from '../models/travelDebtsModel.js'
+import travelPurchaseModel from '../models/travel/travelPurchaseModel.js'
+import travelDebtsModel from '../models/travel/travelDebtsModel.js'
 import userModel from '../models/userModel.js'
 
 import Sequelize from 'sequelize'

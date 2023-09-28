@@ -6,6 +6,7 @@ import userRoutes from  './app/routes/userRoutes.js'
 import authRoutes from  './app/routes/authRoutes.js'
 import travelRoutes from  './app/routes/travelRoutes.js'
 import bankingRoutes from  './app/routes/bankingRoutes.js'
+import creditRoutes from  './app/routes/creditRoutes.js'
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/travel', travelRoutes);
 app.use('/api/banking', bankingRoutes);
+app.use('/api/credit', creditRoutes);
 
 sequelize.sync({ force: false })
   .then(() => {

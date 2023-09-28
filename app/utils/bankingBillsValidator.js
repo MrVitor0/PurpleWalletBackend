@@ -5,7 +5,8 @@ class bankingBillsValidator extends baseValidator {
     static TYPE_TRANSACTION = {
         DEPOSIT: 1,
         WITHDRAW: 2,
-        TRANSFER: 3
+        TRANSFER: 3,
+        PAYMENT: 4
     }
     static TYPE_PAYMENT = {
         CREDIT_CARD: 1,
@@ -20,6 +21,8 @@ class bankingBillsValidator extends baseValidator {
                 return 'banking.WITHDRAW';
             case '3':
                 return 'banking.TRANSFER';
+            case '4':
+                return 'banking.PAYMENT';
             default:
                 return 'banking.UNKNOWN';
         }

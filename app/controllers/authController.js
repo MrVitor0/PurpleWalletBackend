@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import config from '../../config/config.js'
-import BankingModel from '../models/bankingModel.js'
+import BankingModel from '../models/banking/bankingModel.js'
 import UserModel from '../models/userModel.js'
 
 const exports = {};
