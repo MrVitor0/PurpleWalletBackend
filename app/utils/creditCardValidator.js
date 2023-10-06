@@ -65,7 +65,7 @@ class creditCardValidator extends baseValidator {
                 if (data.reference && creditCardValidator.isISO8601(data.reference)) {
                     // Se houver uma referência, use o mês e o ano dela, mas defina o dia como o primeiro dia do mês.
                     const referenceDate = new Date(data.reference);
-                    creditPurchase.reference = new Date(referenceDate.getFullYear(), referenceDate.getMonth(), referenceDate.getDay()).toISOString();
+                    creditPurchase.reference = new Date(referenceDate.getFullYear(), referenceDate.getMonth(), 1).toISOString();
                 } else {
                     // Caso contrário, use o primeiro dia do mês atual como referência.
                     const currentDate = new Date();

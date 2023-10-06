@@ -237,7 +237,7 @@ exports.getCreditCardPurchases = async (req, res) => {
   
       if (!creditCardBill) {
         res.status(200).send({
-          message: "Oops, empty results",
+          results: [],
           query: req.body.reference,
         });
         return;
@@ -252,7 +252,7 @@ exports.getCreditCardPurchases = async (req, res) => {
   
       if (creditCardBills.length < 1) {
         res.status(200).send({
-          message: "Oops, empty results",
+          results: [],
           query: req.body.reference,
         });
         return;
@@ -264,7 +264,10 @@ exports.getCreditCardPurchases = async (req, res) => {
         creditCardBill.dataValues.month = new Date(creditCardBill.reference).toLocaleString('default', { month: 'long' });
       });
   
-      res.status(200).send(creditCardBills);
+      res.status(200).send({
+        results: creditCardBills,
+        query: req.body.reference,
+      });
     }
 };
   
