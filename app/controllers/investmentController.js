@@ -7,7 +7,7 @@ const exports = {};
 
 exports.getInvestments = async (req, res) => {
   try {
-    const userInvestments = await InvestmentModel.findAll({
+    const userInvestments = await InvestmentModel.findOne({
       where: {
         id_user: req.user.id
       }
@@ -17,6 +17,26 @@ exports.getInvestments = async (req, res) => {
     console.error(error);
     res.status(500).send('Server Error');
   }
+};
+
+exports.getInvestmentsAll = async (req, res) => {
+    try {
+        const userInvestments = await InvestmentModel.findOne({
+            where: {
+                id_user: req.user.id
+            },
+            include: [
+                {
+                    model: InvestmentHistoryModel,
+                    as: 'investments'
+                }
+            ]
+        });
+        res.status(200).send(userInvestments);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error');
+    }
 };
 
 

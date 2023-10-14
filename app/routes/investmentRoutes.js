@@ -5,6 +5,7 @@ import authMiddleware from '../middlewares/authMiddleware.js'
 
 // Rota para cadastro de usuário
 router.get('/wallet/list', authMiddleware, InvestmentController.getInvestments);
+router.get('/wallet/list/all', authMiddleware, InvestmentController.getInvestmentsAll);
 router.post('/wallet/create', authMiddleware, InvestmentController.createWallet);
 
 
