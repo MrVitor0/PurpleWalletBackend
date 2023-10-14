@@ -9,6 +9,7 @@ router.post('/wallet/create', authMiddleware, InvestmentController.createWallet)
 
 
 router.post('/create', authMiddleware, InvestmentController.createInvestment);
+router.put('/edit/:id', authMiddleware, InvestmentController.editInvestment);
 router.delete('/delete/:id', authMiddleware, InvestmentController.deleteInvestment);
 
 

@@ -1,5 +1,6 @@
 import sequelize from '../../../config/database.js';
 import Sequelize from 'sequelize';
+import investmentsHistoryModel from '../investment/investmentsHistory.js';
 
 const investmentModel = sequelize.define('tb_investments', {
   id: {
@@ -25,4 +26,10 @@ const investmentModel = sequelize.define('tb_investments', {
   },
 });
   
+investmentModel.hasMany(investmentsHistoryModel, {
+    foreignKey: 'id_investments',
+    as: 'investments',
+});
+
+
 export default investmentModel;
