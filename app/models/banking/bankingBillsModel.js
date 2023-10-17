@@ -28,6 +28,10 @@ const bankingBillsModel = sequelize.define('tb_banking_bills', {
         type: Sequelize.DOUBLE,
         allowNull: false,
   },
+  referenceAt: {
+    type: Sequelize.DATE,
+    allowNull: false,
+  },
   createdAt: {
     type: Sequelize.DATE,
     defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),

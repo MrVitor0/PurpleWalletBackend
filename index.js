@@ -19,12 +19,12 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json()); 
 
-app.use('/api/user', userRoutes);
-app.use('/api/auth', authRoutes);
-app.use('/api/travel', travelRoutes);
-app.use('/api/banking', bankingRoutes);
-app.use('/api/credit', creditRoutes);
-app.use('/api/investment', investmentRoutes);
+app.use('/api/user', userRoutes)
+app.use('/api/auth', authRoutes)
+app.use('/api/travel', travelRoutes)
+app.use('/api/banking', bankingRoutes)
+app.use('/api/credit', creditRoutes)
+app.use('/api/investment', investmentRoutes)
 
 sequelize.sync({ force: false })
   .then(() => {

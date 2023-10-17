@@ -31,9 +31,10 @@ exports.createTransaction = async (req, res) => {
         id_user: req.user.id
       }
     }); 
-    const {
+    let {
       type_transaction,
       type_payment,
+      referenceAt,
       name,
       amount,
     } = req.body;
@@ -42,11 +43,27 @@ exports.createTransaction = async (req, res) => {
     BankingBillsValidator.validate_type_payment(type_payment, 'type_payment');
     BankingBillsValidator.validateString(name, 'name');
     BankingBillsValidator.validateDouble(amount, 'amount');
+
+    if(referenceAt) {
+      //check if is in format ISO 8601
+      const date = new Date(referenceAt);
+      if(isNaN(date.getTime())) {
+        res.status(400).send({
+          message: 'Invalid date format',
+        });
+      }
+    }else{
+      referenceAt = new Date();
+      //ISO 8601
+      referenceAt = referenceAt.toISOString();
+    }
+    
     //create a new transaction
     const newTransaction = await bankingBillsModel.create({
       id_banking: banking.id,
       type_transaction: BankingBillsValidator.TYPE_TRANSACTION[type_transaction?.toString()],
       type_payment: BankingBillsValidator.TYPE_PAYMENT[type_payment?.toString()],
+      referenceAt: referenceAt,
       name,
       amount
     });
