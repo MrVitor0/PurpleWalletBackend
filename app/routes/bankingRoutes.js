@@ -11,4 +11,10 @@ router.post('/user/transaction/create', authMiddleware, BankingController.create
 router.get('/user/transaction/list/:id?', authMiddleware, BankingController.getTransaction);
 router.put('/user/transaction/update/:id', authMiddleware, BankingController.updateTransaction);
 router.delete('/user/transaction/delete/:id', authMiddleware, BankingController.deleteTransaction);
+
+//Transactions Utils
+router.get('/user/transaction/monthly/:month/:year', authMiddleware, BankingController.getMonthlyTransactions);
+router.get('/user/transaction/yearly/:year', authMiddleware, BankingController.getYearlyTransactions);
+
+
 export default router;

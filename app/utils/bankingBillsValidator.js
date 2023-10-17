@@ -13,6 +13,8 @@ class bankingBillsValidator extends baseValidator {
         DEBIT_CARD: 2,
         MONEY: 3
     }
+
+
     static getTransactionType(type_transaction) {
         switch (type_transaction) {
             case '1':

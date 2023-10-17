@@ -1,6 +1,7 @@
 import bankingModel from '../models/banking/bankingModel.js';
 import bankingBillsModel from '../models/banking/bankingBillsModel.js';
 import BankingBillsValidator from '../utils/bankingBillsValidator.js';
+import { Op } from 'sequelize'
 const exports = {}
 exports.getUserBalance = async (req, res) => {
   try {
@@ -254,6 +255,111 @@ exports.deleteTransaction = async (req, res) => {
   }
   
 }
+
+
+
+exports.getMonthlyTransactions = async (req, res) => {
+  let { month, year } = req.params;
+
+  try {
+    if ((month < 1 || month > 12 || isNaN(parseFloat(month))) || (year < 2000 || year > 2100 || isNaN(parseFloat(year)))) {
+      const currentDate = new Date();
+      month = currentDate.getMonth() + 1;
+      year = currentDate.getFullYear();
+    }
+    let startDate = new Date(year, month - 1, 1);
+    let endDate =  new Date(year, month, 0, 23, 59, 59);
+    let banking = await bankingModel.findAll({
+      where: {
+        id_user: req.user.id,
+      },
+      include: [
+        {
+          model: bankingBillsModel,
+          as: 'banking',
+          where: {
+            referenceAt: {
+              [Op.gte]: startDate.toISOString(),
+              [Op.lt]: endDate.toISOString(),
+            },
+          },
+        },
+      ],
+    });
+    res.status(201).send(banking);
+  } catch (error) {
+    res.status(500).send({
+      message: 'Oops, something went wrong!',
+      error: error.message,
+    });
+  }
+};
+
+
+exports.getYearlyTransactions = async (req, res) => {
+  let { year } = req.params;
+  const currentDate = new Date();
+  if (year < 2000 || year > 2100 || isNaN(parseFloat(year))) {
+    year = currentDate.getFullYear();
+  }
+  const startDate = new Date(year, 0, 1);
+  const endDate = new Date(year, 12, 0, 23, 59, 59);
+  try {
+    const banking = await bankingModel.findAll({
+      where: {
+        id_user: req.user.id,
+      },
+      include: [
+        {
+          model: bankingBillsModel,
+          as: 'banking',
+          where: {
+            referenceAt: {
+              [Op.gte]: startDate.toISOString(),
+              [Op.lt]: endDate.toISOString(),
+            },
+          },
+        },
+      ],
+    });
+    const monthlyTransactions = new Map();
+    for (let i = 0; i < 12; i++) {
+
+      //create a timestamp that holdes the format YYYY-MM, months have to be 01 - 12
+      let timestamp = new Date(year, i, 1);
+      timestamp = timestamp.toISOString().split('T')[0].slice(0, 7);
+
+      monthlyTransactions.set(i, {
+        month: i + 1,
+        timestamp: timestamp,
+        balance: 0,
+        earnings: [],
+        expenses: [],
+      });
+    }
+    banking.forEach((banking) => {
+      banking.banking.forEach((transaction) => {
+        const monthKey = transaction.referenceAt.getMonth();
+        const monthlyData = monthlyTransactions.get(monthKey);
+        if (transaction.type_transaction === 1) {
+          monthlyData.balance += transaction.amount;
+          monthlyData.earnings.push(transaction);
+        } else {
+          monthlyData.balance -= transaction.amount;
+          monthlyData.expenses.push(transaction);
+        }
+      });
+    });
+    const monthlyTransactionsArray = Array.from(monthlyTransactions.values());
+    res.status(201).send(monthlyTransactionsArray);
+  } catch (error) {
+    res.status(500).send({
+      message: 'Oops, something went wrong!',
+      error: error.message,
+    });
+  }
+};
+
 
 
 export default exports;
